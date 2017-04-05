@@ -24,8 +24,8 @@ class LearningAgent(Agent):
         ###########
         # Set any additional class parameters as needed
         self.learn_trial = 0
-        self.old_state = None
-        self.old_action = None
+        self.old_state = -1
+        self.old_action = -1
 
 
     def reset(self, destination=None, testing=False):
@@ -44,7 +44,7 @@ class LearningAgent(Agent):
         # If 'testing' is True, set epsilon and alpha to 0
 
         self.learn_trial += 1
-        self.epsilon = 0.95**self.learn_trial
+        self.epsilon = 0.98**self.learn_trial
         # self.epsilon -= 0.05
         
         if testing:
@@ -67,7 +67,7 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Set 'state' as a tuple of relevant data for the agent        
-        state = (waypoint, inputs['light'], inputs['oncoming'])
+        state = (waypoint, inputs['light'], inputs['oncoming'], inputs['left'])
   
         return state
 
@@ -127,7 +127,9 @@ class LearningAgent(Agent):
             if rand_num < self.epsilon:
                 action = random.choice(self.valid_actions)
             else:
-                action = max(self.Q[state])
+                max_Q = max(self.Q[state].values())
+                max_actions = [action for action, Q in self.Q[state].items() if Q == max_Q]
+                action = random.choice(max_actions)
  
         return action
 
@@ -142,8 +144,8 @@ class LearningAgent(Agent):
         ###########
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
-        if self.learning and (self.old_state != None and self.old_action != None):
-            self.Q[self.old_state][self.old_action] = (1-self.alpha)*self.Q[self.old_state][self.old_action] + self.alpha*(reward+self.get_maxQ(state))
+        if self.learning and self.old_state != -1:
+            self.Q[self.old_state][self.old_action] = (1-self.alpha)*self.Q[self.old_state][self.old_action] + self.alpha*(reward + self.get_maxQ(state))
 
         return
 
@@ -203,7 +205,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=20)
+    sim.run(n_test=20, tolerance=0.01)
 
 
 if __name__ == '__main__':
