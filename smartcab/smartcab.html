@@ -11898,7 +11898,7 @@ div#notebook {
 <ol>
 <li><p>In agent.py file, we can set self.learning, self.epsilon, and self.alpha these three flags. Self.learning is a boolean variable, which will decide whether the agent will be learning based on the rewards or not. Self.epsilo is the randome exploration factor, which determines the randomness of the agent's behavior to avoid stucking in local minima and failing to converge to global minima. Self.alhpa is the learning factor ranging from 0 to 1, where 0 indicates no learning and 1 completely learning new information. Usually we want neither cases because no learning means no improvement and completely leanring new information means the agent will never improve based on its past experience.</p>
 </li>
-<li><p>The <strong>sense</strong> function in the environment class is called when an agent takes an action.</p>
+<li><p>The <strong>act</strong> function in the environment class is called when an agent takes an action.</p>
 </li>
 <li><p>The render_text() function is the non-GUI render display of the simulation (data will be displayed in terminal) whereas the render() function is the GUI render display.</p>
 </li>
