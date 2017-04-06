@@ -24,8 +24,6 @@ class LearningAgent(Agent):
         ###########
         # Set any additional class parameters as needed
         self.learn_trial = 0
-        self.old_state = -1
-        self.old_action = -1
 
 
     def reset(self, destination=None, testing=False):
@@ -144,9 +142,8 @@ class LearningAgent(Agent):
         ###########
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
-        if self.learning and self.old_state != -1:
-            self.Q[self.old_state][self.old_action] = (1-self.alpha)*self.Q[self.old_state][self.old_action] + self.alpha*(reward + self.get_maxQ(state))
-
+        if self.learning:
+            self.Q[state][action] = (1-self.alpha)*self.Q[state][action] + self.alpha*reward
         return
 
 
@@ -160,8 +157,6 @@ class LearningAgent(Agent):
         action = self.choose_action(state)  # Choose an action
         reward = self.env.act(self, action) # Receive a reward
         self.learn(state, action, reward)   # Q-learn
-        self.old_state = state
-        self.old_action = action
         return
         
 
