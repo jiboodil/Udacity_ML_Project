@@ -1,7 +1,7 @@
 # Udacity Machine Learning Nano Degree Capstone Project: Stock Segmentation
 
 ## Software Requirement
-To successfully execute the iPython Notebook, the following list of software and packages are needed:
+To successfully execute the main iPython Notebook **Stock_Market_Segments.ipynb**, the following list of software and packages are needed:
 1. Python 2.7
 2. numpy 1.11.2
 3. pandas 0.20.1
